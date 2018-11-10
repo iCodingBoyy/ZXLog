@@ -1,0 +1,6 @@
+framework module ZXLog {
+  umbrella header "ZXLog.h"
+
+  export *
+  module * { export * }
+}
