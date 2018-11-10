@@ -22,7 +22,7 @@ FOUNDATION_EXPORT const unsigned char ZXLogVersionString[];
 #endif
 
 
-#define LogInternal(level, module, file, line, func, prefix, format, ...) \
+#define ZLogInternal(level, module, file, line, func, prefix, format, ...) \
 do { \
 if ([ZXCLog shouldLog:level]) { \
 NSString *aMessage = [NSString stringWithFormat:@"%@%@", prefix, [NSString stringWithFormat:format, ##__VA_ARGS__, nil]]; \
@@ -35,14 +35,14 @@ NSString *aMessage = [NSString stringWithFormat:@"%@%@", prefix, [NSString strin
 /**
  *  Module Logging
  */
-#define LOG_ERROR(module, format, ...) LogInternal(ZXLevelError, module, __FILENAME__, __LINE__, __FUNCTION__, @"Error:", format, ##__VA_ARGS__)
-#define LOG_WARNING(module, format, ...) LogInternal(ZXLevelWarn, module, __FILENAME__, __LINE__, __FUNCTION__, @"Warning:", format, ##__VA_ARGS__)
-#define LOG_INFO(module, format, ...) LogInternal(ZXLevelInfo, module, __FILENAME__, __LINE__, __FUNCTION__, @"Info:", format, ##__VA_ARGS__)
-#define LOG_DEBUG(module, format, ...) LogInternal(ZXLevelDebug, module, __FILENAME__, __LINE__, __FUNCTION__, @"Debug:", format, ##__VA_ARGS__)
+#define ZLOG_ERROR(module, format, ...) ZLogInternal(ZXLevelError, module, __FILENAME__, __LINE__, __FUNCTION__, @"Error:", format, ##__VA_ARGS__)
+#define ZLOG_WARNING(module, format, ...) ZLogInternal(ZXLevelWarn, module, __FILENAME__, __LINE__, __FUNCTION__, @"Warning:", format, ##__VA_ARGS__)
+#define ZLOG_INFO(module, format, ...) ZLogInternal(ZXLevelInfo, module, __FILENAME__, __LINE__, __FUNCTION__, @"Info:", format, ##__VA_ARGS__)
+#define ZLOG_DEBUG(module, format, ...) ZLogInternal(ZXLevelDebug, module, __FILENAME__, __LINE__, __FUNCTION__, @"Debug:", format, ##__VA_ARGS__)
 
 
 #if DEBUG
-#define ZLog(format, ...) LogInternal(ZXLevelDebug, NULL, __FILENAME__, __LINE__, __FUNCTION__, @"Debug:", format, ##__VA_ARGS__);
+#define ZLog(format, ...) ZLOG_DEBUG(NULL,format, ...)
 #else
-#define ZLog(format, ...) LogInternal(ZXLevelInfo, NULL, __FILENAME__, __LINE__, __FUNCTION__, @"Info:", format, ##__VA_ARGS__);
+#define ZLog(format, ...) ZLOG_INFO(NULL, format, ...)
 #endif
